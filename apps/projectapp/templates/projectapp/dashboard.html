@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Dashboard</title>
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<style>
+			.container{
+				width: 90%;
+				height: 1000px;
+			}
+			.box-design {
+				display: inline-block;
+				width: 300px;
+				height: 400px;
+				border: 2px solid black;
+				overflow: scroll;
+
+			}
+			.quote-box{
+
+			}
+			.right {
+				display: inline-block;
+				float: right;
+			}
+			.rgt {
+				display: inline-block;
+				position: absolute;
+				right: 10px;
+			}
+			.submit {
+				width: 200px;
+				height: 200px;
+			}
+			.messages {
+			display: inline;
+			color:red;
+			width: 0 auto;
+			height: 0 auto;
+			margin-left: 30px;
+			margin-bottom: 5px;
+			text-align: center;
+		}
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="logout">
+				<a href="/logout"><button class="button right">Logout</button></a>
+			</div>
+			<div class="header">
+				<h2>Welcome, {{current_user.name}} </h2>
+			</div>
+			<h4 style="display: inline;">Quotable Quotes</h4>
+			<h4 style="display: inline; float: right;">Favorite Quotes</h4><br />
+			<div class="box-design">
+					{% for q_quote in q_quotes %}
+					<div class="quote-box">
+						<p style="font-weight: bold;">{{q_quote.author.name}}></p>
+						<p>{{q_quote.content}}</p>
+						<p>Posted by:</p><a href="/users/{{q_quote.post_owner.id}}">{{q_quote.post_owner.name}}</p>
+					</div>
+						<div class="fav">
+							<a href="/addFavorites/{{q_quote.id}}"><button class="button">Add to My List</button></a>
+						</div>
+					{% endfor %}
+			</div>
+			<div class="box-design right">
+				{% for fav_quote in fav_quotes %}
+			<div class="quote-box">
+						<p style="font-weight: bold;">{{fav_quote.author.name}}></p>
+						<p>{{fav_quote.content}}</p>
+						<p>Posted by:</p><p><a href="/users/{{fav_quote.post_owner.id}}">{{fav_quote.post_owner.name}}</a></p>
+					</div>
+						<div class="fav">
+							<a href="/removeFavorites/{{fav_quote.id}}"><button class="button">Remove From My List</button></a>
+						</div>
+					{% endfor %}
+			</div><br />
+			<div class="submit rgt">
+				{% if messages %}
+				<ul class="messages">
+		   		 {% for message in messages %}
+		    	<li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		    	{% endfor %}
+				</ul>
+				{% endif %}
+				<form action="/addQuote" method="POST">
+				{% csrf_token %}
+				<p>Quote By:  <input type="text" name="author" style="width:200px; height:20px"></p>
+				<p>Message:</p><textarea name="content">Enter quote here...</textarea>
+				<input class="add-button" type="submit" value="Submit">
+			</form>
+		</div>
+	</body>
+</html>

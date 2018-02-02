@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<title>Users</title>
+	<style>
+		.button {
+			margin: 10px;
+			font-weight: bold;
+			display: block;
+			position: relative;
+			float: right;
+		}
+		
+		.title, .desc, .users_list {
+			margin-left: 20px;
+		}
+		.desc {
+			font-weight: bold;
+		}
+		.users_list {
+
+		}
+	</style>
+</head>
+<body>
+		<a href="/logout"><button class="button">Logout</button></a>
+		<a href="/dashboard"><button class="button">Dashboard</button></a>
+  	<h4 class="title">Posts by {{user.name}}</h4>
+  	<h5>Count: {{count}}</h5>
+
+  
+	  	{% for post in posts %}
+	  	<div>
+	  		<h6>{{post.author.name}}:</h6><p>{{post.content}}</p>
+	 	</div>
+	  	{% endfor %}
+ 
+
+
+</body>
+</html>

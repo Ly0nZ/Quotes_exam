@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie-edge">
+	<title>Main</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style>
+		.register_div, .login_div {
+			display: inline-block;
+			width: 400px;
+			height: 0 auto;
+			margin: 5px 20px 5px 20px;
+			padding: 10px;
+			border: 2px solid black;
+			text-align: left;
+		}
+		.header {
+			display: block;
+			width: 0 auto;
+			height: auto;
+			margin-left: 20px;
+			text-align: left;
+		}
+		.login_div {
+			position: absolute;
+		}
+		.messages {
+			display: inline;
+			color:red;
+			width: 0 auto;
+			height: 0 auto;
+			margin-left: 30px;
+			margin-bottom: 5px;
+			text-align: center;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="header">
+		<h3>Welcome!</h3>
+	</div>
+	{% if messages %}
+		<ul class="messages">
+		    {% for message in messages %}
+		    <li {% if message.tags %} class="{{ message.tags }}">{% endif %}{{ message }}</li>
+		    {% endfor %}
+		</ul>
+	{% endif %}
+	<div class="register_div">
+		<form action="/register" method="POST">
+			{% csrf_token %}
+			<h4>Register</h4>
+			<p>Name: <input type="text" name="name"></p>
+			<p>Alias: <input type="text" name="alias"></p>
+			<p>Email: <input type="text" name="email"></p>
+			<p>Password: <input type="password" name="password"></p>
+			<p>Password should be at least 8 characters</p>
+			<p>Confirm PW: <input type="password" name="confirm-password"></p>
+			<input type="submit" value="Register" class="submit_button">
+		</form>
+	</div>
+	<div class="login_div">
+		<form action="/login" method="POST">
+			{% csrf_token %}
+			<h4>Login</h4>
+			<p>Email: <input type="text" name="email"></p>
+			<p>Password: <input type="password" name="password"></p>
+			<input type="submit" value="Login" class="submit_button">
+		</form>
+	</div>
+</body>
+</html>
